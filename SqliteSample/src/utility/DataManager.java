@@ -15,7 +15,7 @@ public class DataManager {
 	private Note[] notesList;    //list of notes stored in database
 	private int size;            // length of NotesList
 	private Connection connection;  // database connection
-	private Statement statment;     // database statment
+	private Statement statement;     // database statement
 	
 	
 	// Constructor 
@@ -49,12 +49,12 @@ public class DataManager {
 		openDBConnection();
 		try
         {
-            statment = connection.createStatement();
+            statement = connection.createStatement();
             String sql = "CREATE TABLE IF NOT EXISTS NOTE " +
                        "( NOTE_CONTENT        TEXT, " + 
                        " NOTE_TIME         DATETIME)";                        
-            statment.executeUpdate(sql);
-            statment.close();
+            statement.executeUpdate(sql);
+            statement.close();
         } catch ( Exception e ) {
           System.err.println( e.getLocalizedMessage() );
         }
@@ -66,8 +66,8 @@ public class DataManager {
 		ArrayList all = new ArrayList();
 	     try {
 
-	      statment = connection.createStatement();
-	      ResultSet rs = statment.executeQuery( "SELECT * FROM NOTE;" );
+	      statement = connection.createStatement();
+	      ResultSet rs = statement.executeQuery( "SELECT * FROM NOTE;" );
 	      Note myNote = new Note();
 	      while ( rs.next() ) {
 	    	  myNote.setContent(rs.getString("NOTE_CONTENT"));
@@ -77,7 +77,7 @@ public class DataManager {
 	         myNote = new Note();
 	      }
 	      rs.close();
-	      statment.close();
+	      statement.close();
 	    } catch ( Exception e ) {
 	      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 	    }
@@ -91,10 +91,10 @@ public class DataManager {
 	//delete item from database
 	public void deleteItem(String date){
 		try{
-		      statment = connection.createStatement();
+		      statement = connection.createStatement();
 		      String sql = "DELETE FROM NOTE WHERE NOTE_TIME = '"+ date + "';";		      
-		      statment.executeUpdate(sql);
-		      statment.close();
+		      statement.executeUpdate(sql);
+		      statement.close();
 		    }catch(Exception e)
 		    {
 		        System.err.println( e.getClass().getName() + ": " + e.getMessage() );
@@ -106,12 +106,12 @@ public class DataManager {
 	//add item to database
 	public void addItem(Note newNote){
 		try{
-		      statment = connection.createStatement();
+		      statement = connection.createStatement();
 		      String sql = "INSERT INTO NOTE (NOTE_CONTENT, NOTE_TIME) " +
 		                   "VALUES ( '"+newNote.getContent()+"', '"+newNote.getTime()+"' );"; 
 		      
-		      statment.executeUpdate(sql);
-		      statment.close();
+		      statement.executeUpdate(sql);
+		      statement.close();
 		    }catch(Exception e)
 		    {
 		        System.err.println( e.getClass().getName() + ": " + e.getMessage() );
